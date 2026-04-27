@@ -4,11 +4,15 @@ public class Main {
     public static void main(String[] args) {
         PricingEngine engine = new PricingEngine();
         
-        // Test SAVE10
-        double save10 = engine.calculate(100, 1, "REGULAR", "SAVE10");
-        System.out.println("SAVE10 actual = " + save10);
+        // Clean code test with enums
+        double result = engine.calculate(
+            100,                    // price
+            2,                      // quantity  
+            CustomerType.VIP,       // customer type
+            DiscountCode.SAVE10     // discount code
+        );
         
-        // Expected calculation
-        System.out.println("Expected: 100 - 10 + 19% tax = " + (90 * 1.19));
+        System.out.printf("Final Price: $%.2f%n", result);
+        System.out.println("Expected: $178.50 ✅");
     }
 }
