@@ -1,23 +1,18 @@
 package com.example;
 
 public class PricingEngine {
+    private final DiscountEngine discountEngine = new DiscountEngine();
+    private final TaxCalculator taxCalculator = new TaxCalculator();
+    
     public double calculate(double price, int quantity, String customerType, String discountCode) {
+        // Subtotal
         double subtotal = price * quantity;
         
-        // ❌ Bad Design: Magic numbers + String comparison
-        if (customerType.equals("VIP")) {
-            subtotal *= 0.8;  // 20% VIP discount
-        }
+        // Apply discounts
+        double discounted = discountEngine.applyCustomerDiscount(subtotal, customerType);
+        discounted = discountEngine.applyDiscountCode(discounted, discountCode);
         
-        // ❌ Bad: if-else chain + hardcoded values
-        if (discountCode.equals("SAVE10")) {
-            subtotal -= 10;
-        } else if (discountCode.equals("SAVE20")) {
-            subtotal -= 20;
-        }
-        
-        // ❌ Bad: Tax hardcoded
-        double tax = subtotal * 0.19;
-        return subtotal + tax;
+        // Apply tax
+        return taxCalculator.applyTax(discounted);
     }
 }

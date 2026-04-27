@@ -4,9 +4,11 @@ public class Main {
     public static void main(String[] args) {
         PricingEngine engine = new PricingEngine();
         
-        // Test case: 100$ x 2, VIP, SAVE10
-        double result = engine.calculate(100, 2, "VIP", "SAVE10");
-        System.out.printf("Final Price: $%.2f%n", result);
-        // Expected: 178.50
+        // Test SAVE10
+        double save10 = engine.calculate(100, 1, "REGULAR", "SAVE10");
+        System.out.println("SAVE10 actual = " + save10);
+        
+        // Expected calculation
+        System.out.println("Expected: 100 - 10 + 19% tax = " + (90 * 1.19));
     }
 }
